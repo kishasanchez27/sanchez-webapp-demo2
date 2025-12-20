@@ -273,57 +273,59 @@ export default function TailwindTutorial() {
 )}
 
           {/* Layout & Spacing */}
-          {activeTab === 'layout' && (
-            <div className="space-y-6">
-              <h2 className="text-2xl font-bold text-purple-900">Layout & Spacing</h2>
-              
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="text-xl font-semibold text-purple-800 mb-4">Spacing Scale</h3>
-                  
-                  <div className="space-y-3">
-                    {[
-                      { class: 'p-2', value: '0.5rem (8px)' },
-                      { class: 'p-4', value: '1rem (16px)' },
-                      { class: 'p-6', value: '1.5rem (24px)' },
-                      { class: 'p-8', value: '2rem (32px)' },
-                    ].map((item) => (
-                      <div key={item.class} className="flex items-center justify-between p-3 bg-purple-50 border border-purple-100 rounded">
-                        <code className="px-3 py-1 bg-purple-600 text-white rounded text-sm">
-                          {item.class}
-                        </code>
-                        <span className="text-purple-700">{item.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+{activeTab === 'layout' && (
+  <div className="space-y-6">
+    <h2 className="text-2xl font-bold text-purple-900">Layout & Spacing</h2>
+    
+    <div className="flex flex-col md:flex-row gap-8">
+      {/* Spacing Scale - Full width on mobile, half on desktop */}
+      <div className="w-full md:w-1/2">
+        <h3 className="text-xl font-semibold text-purple-800 mb-4">Spacing Scale</h3>
+        
+        <div className="space-y-3">
+          {[
+            { class: 'p-2', value: '0.5rem (8px)' },
+            { class: 'p-4', value: '1rem (16px)' },
+            { class: 'p-6', value: '1.5rem (24px)' },
+            { class: 'p-8', value: '2rem (32px)' },
+          ].map((item) => (
+            <div key={item.class} className="flex items-center justify-between p-3 bg-purple-50 border border-purple-100 rounded">
+              <code className="px-3 py-1 bg-purple-600 text-white rounded text-sm">
+                {item.class}
+              </code>
+              <span className="text-purple-700 text-sm">{item.value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
 
-                <div>
-                  <h3 className="text-xl font-semibold text-purple-800 mb-4">Grid Example</h3>
-                  
-                  <div className="p-6 border border-purple-200 rounded-lg">
-                    <div className="grid grid-cols-3 gap-3 mb-6">
-                      {[1, 2, 3, 4, 5, 6].map((num) => (
-                        <div key={num} className="h-12 bg-purple-400 rounded flex items-center justify-center">
-                          <span className="text-white font-bold">{num}</span>
-                        </div>
-                      ))}
-                    </div>
-                    
-                    <div className="p-4 bg-purple-900 text-purple-100 rounded-lg">
-                      <pre className="text-sm">
+      {/* Grid Example - Full width on mobile, half on desktop */}
+      <div className="w-full md:w-1/2">
+        <h3 className="text-xl font-semibold text-purple-800 mb-4">Grid Example</h3>
+        
+        <div className="p-6 border border-purple-200 rounded-lg">
+          <div className="grid grid-cols-3 gap-3 mb-6">
+            {[1, 2, 3, 4, 5, 6].map((num) => (
+              <div key={num} className="h-12 bg-purple-400 rounded flex items-center justify-center">
+                <span className="text-white font-bold">{num}</span>
+              </div>
+            ))}
+          </div>
+          
+          <div className="p-4 bg-purple-900 text-purple-100 rounded-lg overflow-x-auto">
+            <pre className="text-xs whitespace-pre-wrap break-words">
 {`<div class="grid grid-cols-3 gap-3">
   <div class="h-12 bg-purple-400 rounded">1</div>
   <div class="h-12 bg-purple-400 rounded">2</div>
   <div class="h-12 bg-purple-400 rounded">3</div>
 </div>`}
-                      </pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+            </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
 
           {/* Building Components */}
           {activeTab === 'components' && (
