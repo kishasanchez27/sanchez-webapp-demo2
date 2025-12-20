@@ -1,490 +1,502 @@
-import { useState } from "react";
-import Image from "next/image";
+'use client';
 
-export default function Home() {
-  const [copiedButton, setCopiedButton] = useState("");
-  
-  const copyToClipboard = (code, name) => {
-    navigator.clipboard.writeText(code);
-    setCopiedButton(name);
-    setTimeout(() => setCopiedButton(""), 2000);
-  };
+import { useState } from 'react';
+import Image from 'next/image';
+
+export default function TailwindTutorial() {
+  const [activeTab, setActiveTab] = useState('what-is-tailwind');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      {/* Navigation Menu */}
-      <nav className="bg-white shadow-lg sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-indigo-600">TailwindTutorial</h1>
-            </div>
-            <div className="hidden md:flex space-x-8">
-              <a href="#getting-started" className="text-gray-700 hover:text-indigo-600 transition">Getting Started</a>
-              <a href="#buttons" className="text-gray-700 hover:text-indigo-600 transition">Buttons</a>
-              <a href="#responsive" className="text-gray-700 hover:text-indigo-600 transition">Responsive Design</a>
-              <a href="#practical" className="text-gray-700 hover:text-indigo-600 transition">Practical Examples</a>
-            </div>
-            <button className="md:hidden">
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
-      <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h1 className="text-5xl font-extrabold text-gray-900 mb-4">
-            Complete Tailwind CSS Tutorial for JavaScript Developers
+    <div className="min-h-screen bg-purple-50">
+      {/* Header */}
+      <header className="bg-purple-600 border-b border-purple-700">
+        <div className="container mx-auto px-6 py-4">
+          <h1 className="text-3xl font-bold text-white">
+            Tailwind CSS Tutorial
           </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-            Learn how to integrate and use Tailwind CSS in your JavaScript projects with practical examples, code snippets, and best practices.
+          <p className="text-purple-100 mt-2">
+            Learn Tailwind CSS with practical examples
           </p>
-          <div className="inline-flex gap-4">
-            <a href="#getting-started" className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition transform hover:scale-105">
-              Start Learning
-            </a>
-            <a href="#practical" className="border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white font-bold py-3 px-6 rounded-lg transition">
-              See Examples
-            </a>
-          </div>
+        </div>
+      </header>
+
+      <div className="container mx-auto px-6 py-8">
+        {/* Tabs Navigation */}
+        <div className="flex flex-wrap gap-2 mb-8">
+          {[
+            { id: 'what-is-tailwind', label: 'What is Tailwind?' },
+            { id: 'utility-first', label: 'Utility-First' },
+            { id: 'responsive', label: 'Responsive' },
+            { id: 'colors-typography', label: 'Colors & Text' },
+            { id: 'layout', label: 'Layout' },
+            { id: 'components', label: 'Components' },
+            { id: 'demo', label: 'Portfolio Demo' },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-4 py-2 rounded-lg font-medium ${
+                activeTab === tab.id
+                  ? 'bg-purple-600 text-white'
+                  : 'bg-white text-purple-700 border border-purple-200'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
 
-        {/* Getting Started Section */}
-        <section id="getting-started" className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Getting Started with Tailwind CSS</h2>
-          <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-            <div className="prose max-w-none">
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Installation Steps</h3>
-              <p className="text-gray-600 mb-6">Here's how to install Tailwind CSS in your JavaScript project:</p>
+        {/* Content Area */}
+        <div className="bg-white rounded-lg border border-purple-200 p-8">
+          {/* What is Tailwind CSS? */}
+          {activeTab === 'what-is-tailwind' && (
+            <div className="space-y-6">
+              <h2 className="text-2xl font-bold text-purple-900">What is Tailwind CSS?</h2>
               
-              <div className="bg-gray-900 text-gray-100 p-6 rounded-lg mb-6 overflow-x-auto">
-                <code className="text-sm">
-                  <span className="text-green-400"># Install via npm</span><br/>
-                  npm install -D tailwindcss<br/>
-                  npx tailwindcss init<br/><br/>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h3 className="text-xl font-semibold text-purple-800 mb-4">Definition</h3>
+                  <p className="text-purple-700">
+                    Tailwind CSS is a utility-first CSS framework that provides low-level utility 
+                    classes to build custom designs directly in your markup.
+                  </p>
                   
-                  <span className="text-green-400"># Configure tailwind.config.js</span><br/>
-                  <span className="text-blue-300">module.exports = </span>{`{`}<br/>
-                  &nbsp;&nbsp;<span className="text-yellow-300">content</span>: [<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-orange-300">"./src/**/*.{js,jsx,ts,tsx}"</span>,<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-orange-300">"./public/index.html"</span><br/>
-                  &nbsp;&nbsp;],<br/>
-                  &nbsp;&nbsp;<span className="text-yellow-300">theme</span>: {`{`}<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-yellow-300">extend</span>: {},<br/>
-                  &nbsp;&nbsp;},<br/>
-                  &nbsp;&nbsp;<span className="text-yellow-300">plugins</span>: [],<br/>
-                  {`}`}
-                </code>
-              </div>
-
-              <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
-                <h4 className="font-bold text-blue-800 mb-2">💡 Pro Tip</h4>
-                <p className="text-blue-700">Tailwind is a utility-first CSS framework. Instead of writing custom CSS, you use predefined classes directly in your HTML/JSX.</p>
-              </div>
-
-              <h4 className="text-xl font-bold text-gray-800 mt-8 mb-4">Basic Example</h4>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h5 className="font-bold text-gray-700 mb-2">JSX Code:</h5>
-                  <div className="bg-gray-800 text-gray-100 p-4 rounded text-sm">
-                    {`<div className="bg-blue-500 text-white p-4 rounded-lg shadow-md">
-  <h2 className="text-2xl font-bold mb-2">Hello Tailwind!</h2>
-  <p className="text-blue-100">Styled with utility classes</p>
-</div>`}
+                  <div className="mt-6 p-4 bg-purple-50 border border-purple-100 rounded">
+                    <h4 className="font-bold text-purple-900 mb-2">Key Features:</h4>
+                    <ul className="space-y-2 text-purple-800">
+                      <li>• Utility-first CSS framework</li>
+                      <li>• Highly customizable</li>
+                      <li>• Responsive by default</li>
+                      <li>• Small production bundle</li>
+                    </ul>
                   </div>
                 </div>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h5 className="font-bold text-gray-700 mb-2">Result:</h5>
-                  <div className="bg-blue-500 text-white p-4 rounded-lg shadow-md">
-                    <h2 className="text-2xl font-bold mb-2">Hello Tailwind!</h2>
-                    <p className="text-blue-100">Styled with utility classes</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
-        {/* Buttons Tutorial Section */}
-        <section id="buttons" className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Creating Beautiful Buttons</h2>
-          <div className="bg-white rounded-lg shadow-lg p-8">
-            <p className="text-gray-600 mb-8">Tailwind makes it easy to create responsive, accessible buttons with hover states, transitions, and various styles.</p>
-            
-            <div className="grid lg:grid-cols-2 gap-8">
-              {/* Button Examples */}
-              <div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">Button Variants</h3>
-                <div className="space-y-4">
-                  {[
-                    { name: "primary", code: `className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300"`, comp: "Primary Button" },
-                    { name: "success", code: `className="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg shadow hover:shadow-md transition"`, comp: "Success Button" },
-                    { name: "outline", code: `className="border-2 border-purple-500 text-purple-600 hover:bg-purple-50 font-medium py-2 px-4 rounded transition"`, comp: "Outline Button" },
-                    { name: "gradient", code: `className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:scale-105"`, comp: "Gradient Button" },
-                    { name: "disabled", code: `className="bg-gray-300 text-gray-500 cursor-not-allowed font-medium py-2 px-4 rounded transition" disabled`, comp: "Disabled Button" },
-                  ].map((btn) => (
-                    <div key={btn.name} className="border border-gray-200 rounded-lg p-4">
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="font-medium text-gray-700 capitalize">{btn.name} Button</span>
-                        <button
-                          onClick={() => copyToClipboard(btn.code, btn.name)}
-                          className="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded transition"
-                        >
-                          {copiedButton === btn.name ? "Copied!" : "Copy Code"}
-                        </button>
-                      </div>
-                      <div className="bg-gray-800 text-gray-100 p-3 rounded text-sm font-mono mb-2 overflow-x-auto">
-                        {`<button ${btn.code}>${btn.comp}</button>`}
-                      </div>
-                      <div className="mt-2">
-                        <button dangerouslySetInnerHTML={{ __html: `<button ${btn.code}>${btn.comp}</button>` }} />
-                      </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-purple-800 mb-4">Traditional vs Tailwind</h3>
+                  <div className="space-y-4">
+                    <div className="p-4 border border-orange-200 bg-orange-50 rounded">
+                      <h5 className="font-bold text-orange-700 mb-2">Traditional CSS</h5>
+                      <code className="text-sm text-purple-700 block">
+                        .button {'{'} <br />
+                        &nbsp;&nbsp;padding: 12px 24px;<br />
+                        &nbsp;&nbsp;background: #3b82f6;<br />
+                        &nbsp;&nbsp;color: white;<br />
+                        &nbsp;&nbsp;border-radius: 8px;<br />
+                        {'}'}
+                      </code>
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Button Anatomy */}
-              <div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">Button Anatomy Explained</h3>
-                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-lg mb-6">
-                  <h4 className="font-bold text-gray-800 mb-3">Utility Classes Breakdown:</h4>
-                  <ul className="space-y-2 text-gray-700">
-                    <li className="flex items-start">
-                      <span className="bg-blue-100 text-blue-800 rounded px-2 py-1 text-sm mr-2">bg-blue-500</span>
-                      <span>Background color (blue with 500 intensity)</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="bg-blue-100 text-blue-800 rounded px-2 py-1 text-sm mr-2">hover:bg-blue-600</span>
-                      <span>Background on hover state</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="bg-blue-100 text-blue-800 rounded px-2 py-1 text-sm mr-2">text-white</span>
-                      <span>Text color</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="bg-blue-100 text-blue-800 rounded px-2 py-1 text-sm mr-2">py-2 px-4</span>
-                      <span>Padding: vertical (y) 0.5rem, horizontal (x) 1rem</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="bg-blue-100 text-blue-800 rounded px-2 py-1 text-sm mr-2">rounded</span>
-                      <span>Border radius (0.25rem)</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="bg-blue-100 text-blue-800 rounded px-2 py-1 text-sm mr-2">transition</span>
-                      <span>Adds smooth transition effect</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4">
-                  <h4 className="font-bold text-yellow-800 mb-2">⚠️ Common Pitfalls</h4>
-                  <ul className="text-yellow-700 space-y-1">
-                    <li>• Don't forget to add <code className="bg-yellow-100 px-1 rounded">cursor-pointer</code> for clickable elements</li>
-                    <li>• Use <code className="bg-yellow-100 px-1 rounded">focus:ring-2</code> for accessibility focus states</li>
-                    <li>• Always include hover states for better UX</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Responsive Design Section */}
-        <section id="responsive" className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Responsive Design with Tailwind</h2>
-          <div className="bg-white rounded-lg shadow-lg p-8">
-            <p className="text-gray-600 mb-6">Tailwind uses mobile-first breakpoints to create responsive designs. Here's how it works:</p>
-            
-            <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">Breakpoint System</h3>
-                <div className="space-y-4">
-                  {[
-                    { prefix: "sm:", desc: "≥ 640px (small devices)" },
-                    { prefix: "md:", desc: "≥ 768px (medium devices)" },
-                    { prefix: "lg:", desc: "≥ 1024px (large devices)" },
-                    { prefix: "xl:", desc: "≥ 1280px (extra large)" },
-                    { prefix: "2xl:", desc: "≥ 1536px (2x large)" },
-                  ].map((bp) => (
-                    <div key={bp.prefix} className="flex items-center p-3 bg-gray-50 rounded-lg">
-                      <code className="bg-gray-800 text-white px-3 py-1 rounded mr-3">{bp.prefix}</code>
-                      <span className="text-gray-700">{bp.desc}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">Practical Example</h3>
-                <div className="bg-gray-900 text-gray-100 p-6 rounded-lg">
-                  <code className="text-sm">
-                    <span className="text-gray-400">// Mobile-first responsive card</span><br/>
-                    {`<div className="`}<span className="text-yellow-300">bg-white p-4</span><br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-yellow-300">sm:p-6</span><br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-yellow-300">md:flex</span><br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-yellow-300">lg:p-8</span><br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-yellow-300">xl:max-w-6xl</span>{`">`}<br/>
-                    &nbsp;&nbsp;{`<div className="`}<span className="text-yellow-300">md:w-1/2 lg:w-1/3</span>{`">`}<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-gray-400">{`<!-- Content -->`}</span><br/>
-                    &nbsp;&nbsp;{`</div>`}<br/>
-                    {`</div>`}
-                  </code>
-                </div>
-              </div>
-            </div>
-
-            {/* Live Responsive Demo */}
-            <div className="mt-8 border border-gray-200 rounded-lg overflow-hidden">
-              <div className="bg-gray-800 text-white p-4">
-                <h4 className="font-bold">Live Responsive Demo</h4>
-                <p className="text-sm text-gray-300">Resize your browser to see the changes</p>
-              </div>
-              <div className="p-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <div className="bg-blue-100 p-4 rounded text-center">
-                    <p className="font-bold text-blue-800">Mobile</p>
-                    <p className="text-sm text-blue-600">1 column</p>
-                  </div>
-                  <div className="bg-green-100 p-4 rounded text-center">
-                    <p className="font-bold text-green-800">Tablet</p>
-                    <p className="text-sm text-green-600">2 columns</p>
-                  </div>
-                  <div className="bg-purple-100 p-4 rounded text-center">
-                    <p className="font-bold text-purple-800">Desktop</p>
-                    <p className="text-sm text-purple-600">4 columns</p>
-                  </div>
-                  <div className="bg-purple-100 p-4 rounded text-center">
-                    <p className="font-bold text-purple-800">Desktop</p>
-                    <p className="text-sm text-purple-600">4 columns</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Practical Examples Section */}
-        <section id="practical" className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Practical JavaScript Components</h2>
-          
-          {/* Interactive Card Component */}
-          <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">Interactive Product Card</h3>
-            <p className="text-gray-600 mb-6">Combine Tailwind with JavaScript for interactive components:</p>
-            
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-gradient-to-br from-white to-gray-50 p-6 rounded-lg border border-gray-200">
-                <div className="group relative">
-                  <div className="bg-gradient-to-br from-blue-400 to-purple-500 h-48 rounded-lg mb-4 overflow-hidden">
-                    <div className="absolute top-4 right-4">
-                      <button className="bg-white/90 hover:bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center transition transform group-hover:scale-110">
-                        ♥
-                      </button>
+                    
+                    <div className="p-4 border border-purple-200 bg-purple-50 rounded">
+                      <h5 className="font-bold text-purple-700 mb-2">Tailwind CSS</h5>
+                      <code className="text-sm text-purple-700 block">
+                        &lt;button className="px-6 py-3 bg-purple-500 text-white rounded-lg"&gt;<br />
+                        &nbsp;&nbsp;Button<br />
+                        &lt;/button&gt;
+                      </code>
                     </div>
                   </div>
-                  <h4 className="text-xl font-bold text-gray-900 mb-2">Premium Headphones</h4>
-                  <p className="text-gray-600 mb-4">Noise-cancelling wireless headphones with 30-hour battery life.</p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-2xl font-bold text-gray-900">$199.99</span>
-                    <button className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-2 px-6 rounded-lg transition transform hover:scale-105">
-                      Add to Cart
-                    </button>
-                  </div>
                 </div>
               </div>
+            </div>
+          )}
 
-              <div>
-                <h4 className="font-bold text-gray-800 mb-3">Component Code:</h4>
-                <div className="bg-gray-900 text-gray-100 p-6 rounded-lg overflow-x-auto">
-                  <code className="text-sm">
-                    {`function ProductCard({ title, price, description }) {
-  const [liked, setLiked] = useState(false);
-  
-  return (
-    <div className="group relative bg-white rounded-lg shadow-lg 
-                    hover:shadow-xl transition-shadow duration-300">
-      {/* Product Image */}
-      <div className="relative overflow-hidden rounded-t-lg">
-        <img src="/product.jpg" alt={title} 
-             className="w-full h-48 object-cover 
-                        group-hover:scale-105 transition-transform duration-300"/>
+          {/* Utility-First Approach */}
+{activeTab === 'utility-first' && (
+  <div className="space-y-6">
+    <h2 className="text-2xl font-bold text-purple-900">Utility-First Approach</h2>
+    
+    <div className="grid md:grid-cols-2 gap-8">
+      <div>
+        <h3 className="text-xl font-semibold text-purple-800 mb-4">Understanding Utilities</h3>
+        <p className="text-purple-700 mb-4">
+          Each Tailwind class corresponds to a single CSS property.
+        </p>
         
-        {/* Like Button */}
-        <button 
-          onClick={() => setLiked(!liked)}
-          className={\`absolute top-4 right-4 w-10 h-10 rounded-full 
-                     flex items-center justify-center transition
-                     \${liked ? 'bg-red-500 text-white' : 'bg-white/90 text-gray-800'}
-                     hover:scale-110\`}>
-          {liked ? '❤️' : '🤍'}
-        </button>
+        <div className="space-y-3">
+          {[
+            { class: 'p-4', desc: 'padding: 1rem' },
+            { class: 'bg-purple-500', desc: 'background: #8b5cf6' },
+            { class: 'text-white', desc: 'color: white' },
+            { class: 'rounded-lg', desc: 'border-radius: 0.5rem' },
+            { class: 'font-bold', desc: 'font-weight: bold' },
+          ].map((item) => (
+            <div key={item.class} className="flex items-center p-3 bg-purple-50 border border-purple-100 rounded">
+              <code className="px-3 py-1 bg-purple-600 text-white rounded text-sm">
+                {item.class}
+              </code>
+              <span className="ml-4 text-purple-600">→</span>
+              <span className="ml-4 text-purple-700">{item.desc}</span>
+            </div>
+          ))}
+        </div>
       </div>
-      
-      {/* Product Info */}
-      <div className="p-6">
-        <h3 className="text-xl font-bold text-gray-900 mb-2">{title}</h3>
-        <p className="text-gray-600 mb-4">{description}</p>
-        <div className="flex justify-between items-center">
-          <span className="text-2xl font-bold text-gray-900">{price}</span>
-          <button className="bg-blue-500 hover:bg-blue-600 text-white 
-                           font-semibold py-2 px-6 rounded-lg transition
-                           hover:scale-105 active:scale-95">
-            Add to Cart
-          </button>
+
+      <div>
+        <h3 className="text-xl font-semibold text-purple-800 mb-4">Example Card</h3>
+        <div className="p-6 border border-purple-200 rounded-lg">
+          <div className="p-6 bg-purple-500 text-white rounded-lg">
+            <h4 className="text-xl font-bold mb-2">Card Title</h4>
+            <p className="mb-4">Simple card example using Tailwind classes</p>
+          </div>
+          
+          <div className="mt-6 p-4 bg-purple-900 text-purple-100 rounded-lg overflow-x-auto">
+            <pre className="text-xs whitespace-pre-wrap break-words">
+{`<div class="p-6 bg-purple-500 text-white rounded-lg">
+  <h4 class="text-xl font-bold mb-2">Card Title</h4>
+  <p class="mb-4">Card description</p>
+</div>`}
+            </pre>
+          </div>
         </div>
       </div>
     </div>
-  );
-}`}
-                  </code>
-                </div>
+  </div>
+)}
+
+          {/* Responsive Design */}
+{activeTab === 'responsive' && (
+  <div className="space-y-6">
+    <h2 className="text-2xl font-bold text-purple-900">Responsive Design</h2>
+    
+    <div className="grid md:grid-cols-2 gap-8">
+      <div>
+        <h3 className="text-xl font-semibold text-purple-800 mb-4">Breakpoint System</h3>
+        <p className="text-purple-700 mb-6">
+          Mobile-first breakpoints in Tailwind:
+        </p>
+        
+        <div className="space-y-3">
+          {[
+            { prefix: 'sm:', size: '≥ 640px' },
+            { prefix: 'md:', size: '≥ 768px' },
+            { prefix: 'lg:', size: '≥ 1024px' },
+            { prefix: 'xl:', size: '≥ 1280px' },
+          ].map((bp) => (
+            <div key={bp.prefix} className="flex items-center p-3 bg-purple-50 border border-purple-100 rounded">
+              <code className="px-3 py-1 bg-purple-600 text-white rounded text-sm">
+                {bp.prefix}
+              </code>
+              <span className="ml-4 text-purple-700">{bp.size}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h3 className="text-xl font-semibold text-purple-800 mb-4">Responsive Card</h3>
+        <div className="p-6 border border-purple-200 rounded-lg">
+          <div className="p-6 bg-purple-100 rounded-lg">
+            <div className="flex flex-col md:flex-row gap-4">
+              <div className="w-full md:w-1/3 h-24 bg-purple-400 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold">Image</span>
+              </div>
+              <div className="flex-1">
+                <h5 className="text-lg font-bold text-purple-900 mb-2">Responsive Card</h5>
+                <p className="text-purple-700">This card changes layout on different screen sizes.</p>
               </div>
             </div>
           </div>
+          
+          <div className="mt-6 p-4 bg-purple-900 text-purple-100 rounded-lg overflow-x-auto">
+            <pre className="text-xs whitespace-pre-wrap break-words">
+{`<div class="p-6 bg-purple-100 rounded-lg">
+  <div class="flex flex-col md:flex-row gap-4">
+    <div class="w-full md:w-1/3 h-24 bg-purple-400 rounded-lg">
+      Image
+    </div>
+    <div class="flex-1">
+      <h5 class="text-lg font-bold">Card Title</h5>
+      <p class="text-purple-700">Description</p>
+    </div>
+  </div>
+</div>`}
+            </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
 
-          {/* Loading State Example */}
-          <div className="bg-white rounded-lg shadow-lg p-8">
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">Loading States & Animations</h3>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <div className="space-y-4">
-                  <div className="animate-pulse">
-                    <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
-                    <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+               {/* Colors & Typography */}
+              {activeTab === 'colors-typography' && (
+    <div className="space-y-6">
+    <h2 className="text-2xl font-bold text-purple-900">Colors & Typography</h2>
+    
+    <div className="grid md:grid-cols-2 gap-8">
+      <div>
+        <h3 className="text-xl font-semibold text-purple-800 mb-4">Color Examples</h3>
+        
+        <div className="grid grid-cols-3 gap-3 mb-6">
+          {/* Purple */}
+          <div className="text-center">
+            <div className="h-16 w-full bg-purple-500 rounded mb-2"></div>
+            <span className="text-sm text-purple-700">Purple</span>
+          </div>
+          
+          {/* Orange */}
+          <div className="text-center">
+            <div className="h-16 w-full bg-orange-500 rounded mb-2"></div>
+            <span className="text-sm text-purple-700">Orange</span>
+          </div>
+          
+          {/* Light Purple */}
+          <div className="text-center">
+            <div className="h-16 w-full bg-purple-300 rounded mb-2"></div>
+            <span className="text-sm text-purple-700">Light Purple</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 className="text-xl font-semibold text-purple-800 mb-4">Text Sizes</h3>
+        
+        <div className="space-y-3">
+          {[
+            { class: 'text-sm', desc: 'Small text' },
+            { class: 'text-base', desc: 'Normal text' },
+            { class: 'text-lg', desc: 'Large text' },
+            { class: 'text-xl', desc: 'Extra large' },
+          ].map((item) => (
+            <div key={item.class} className="p-3 border border-purple-100 bg-purple-50 rounded">
+              <p className={item.class + " font-semibold text-purple-900"}>
+                {item.desc}
+              </p>
+              <code className="text-xs text-purple-600 mt-1">{item.class}</code>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+          {/* Layout & Spacing */}
+          {activeTab === 'layout' && (
+            <div className="space-y-6">
+              <h2 className="text-2xl font-bold text-purple-900">Layout & Spacing</h2>
+              
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h3 className="text-xl font-semibold text-purple-800 mb-4">Spacing Scale</h3>
+                  
+                  <div className="space-y-3">
+                    {[
+                      { class: 'p-2', value: '0.5rem (8px)' },
+                      { class: 'p-4', value: '1rem (16px)' },
+                      { class: 'p-6', value: '1.5rem (24px)' },
+                      { class: 'p-8', value: '2rem (32px)' },
+                    ].map((item) => (
+                      <div key={item.class} className="flex items-center justify-between p-3 bg-purple-50 border border-purple-100 rounded">
+                        <code className="px-3 py-1 bg-purple-600 text-white rounded text-sm">
+                          {item.class}
+                        </code>
+                        <span className="text-purple-700">{item.value}</span>
+                      </div>
+                    ))}
                   </div>
-                  <div className="flex space-x-2">
-                    <div className="w-4 h-4 bg-blue-500 rounded-full animate-bounce"></div>
-                    <div className="w-4 h-4 bg-blue-500 rounded-full animate-bounce delay-100"></div>
-                    <div className="w-4 h-4 bg-blue-500 rounded-full animate-bounce delay-200"></div>
-                  </div>
-                  <div className="border border-gray-200 rounded-lg p-4">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="font-medium">Loading Button</span>
-                      <button className="bg-blue-500 text-white px-4 py-2 rounded flex items-center">
-                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-                        </svg>
-                        Processing...
-                      </button>
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-semibold text-purple-800 mb-4">Grid Example</h3>
+                  
+                  <div className="p-6 border border-purple-200 rounded-lg">
+                    <div className="grid grid-cols-3 gap-3 mb-6">
+                      {[1, 2, 3, 4, 5, 6].map((num) => (
+                        <div key={num} className="h-12 bg-purple-400 rounded flex items-center justify-center">
+                          <span className="text-white font-bold">{num}</span>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <div className="p-4 bg-purple-900 text-purple-100 rounded-lg">
+                      <pre className="text-sm">
+{`<div class="grid grid-cols-3 gap-3">
+  <div class="h-12 bg-purple-400 rounded">1</div>
+  <div class="h-12 bg-purple-400 rounded">2</div>
+  <div class="h-12 bg-purple-400 rounded">3</div>
+</div>`}
+                      </pre>
                     </div>
                   </div>
                 </div>
               </div>
-              <div>
-                <h4 className="font-bold text-gray-800 mb-3">Animation Classes:</h4>
-                <ul className="space-y-2 text-gray-700">
-                  <li className="flex items-center">
-                    <code className="bg-gray-100 px-2 py-1 rounded text-sm mr-2">animate-pulse</code>
-                    <span>Pulse animation for loading states</span>
-                  </li>
-                  <li className="flex items-center">
-                    <code className="bg-gray-100 px-2 py-1 rounded text-sm mr-2">animate-spin</code>
-                    <span>Continuous spinning animation</span>
-                  </li>
-                  <li className="flex items-center">
-                    <code className="bg-gray-100 px-2 py-1 rounded text-sm mr-2">animate-bounce</code>
-                    <span>Bouncing animation</span>
-                  </li>
-                  <li className="flex items-center">
-                    <code className="bg-gray-100 px-2 py-1 rounded text-sm mr-2">delay-100</code>
-                    <span>Adds 100ms delay to animation</span>
-                  </li>
-                </ul>
-              </div>
             </div>
-          </div>
-        </section>
+          )}
 
-        {/* Quick Reference */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Quick Reference Guide</h2>
-          <div className="bg-gradient-to-br from-gray-900 to-black text-white rounded-lg shadow-lg p-8">
-            <div className="grid md:grid-cols-3 gap-6">
-              <div>
-                <h4 className="font-bold text-xl mb-4 text-blue-300">Spacing</h4>
-                <ul className="space-y-2">
-                  <li className="flex justify-between"><code>p-4</code><span>Padding 1rem</span></li>
-                  <li className="flex justify-between"><code>m-2</code><span>Margin 0.5rem</span></li>
-                  <li className="flex justify-between"><code>gap-4</code><span>Grid gap 1rem</span></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-bold text-xl mb-4 text-green-300">Typography</h4>
-                <ul className="space-y-2">
-                  <li className="flex justify-between"><code>text-xl</code><span>Extra large text</span></li>
-                  <li className="flex justify-between"><code>font-bold</code><span>Bold weight</span></li>
-                  <li className="flex justify-between"><code>text-center</code><span>Center align</span></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-bold text-xl mb-4 text-purple-300">Colors</h4>
-                <ul className="space-y-2">
-                  <li className="flex justify-between"><code>bg-blue-500</code><span>Blue background</span></li>
-                  <li className="flex justify-between"><code>text-white</code><span>White text</span></li>
-                  <li className="flex justify-between"><code>hover:bg-red-600</code><span>Hover state</span></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          {/* Building Components */}
+          {activeTab === 'components' && (
+            <div className="space-y-6">
+              <h2 className="text-2xl font-bold text-purple-900">Building Components</h2>
+              
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h3 className="text-xl font-semibold text-purple-800 mb-4">Simple Card</h3>
+                  
+                  <div className="p-6 bg-purple-800 text-white rounded-lg">
+                    <div className="h-24 bg-purple-400 rounded mb-4"></div>
+                    <h4 className="text-xl font-bold mb-2">Card Title</h4>
+                    <p className="text-purple-200 mb-4">Simple component example</p>
+                    <button className="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600">
+                      Learn More
+                    </button>
+                  </div>
+                </div>
 
-        {/* Next Steps */}
-        <section className="text-center py-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Ready to Build?</h2>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Start implementing Tailwind CSS in your JavaScript projects today. Remember to check the official documentation for more advanced features.
-          </p>
-          <div className="space-x-4">
-            <a href="https://tailwindcss.com/docs" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-3 px-8 rounded-lg inline-flex items-center transition">
-              Official Docs
-              <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-              </svg>
-            </a>
-            <a href="#getting-started" className="border-2 border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white font-bold py-3 px-8 rounded-lg transition">
-              Review Tutorial
-            </a>
-          </div>
-        </section>
-      </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-purple-800 mb-4">Code Structure</h3>
+                  
+                  <div className="space-y-4">
+                    <div className="p-4 bg-purple-50 border border-purple-100 rounded">
+                      <h4 className="font-bold text-purple-900 mb-2">Card Classes:</h4>
+                      <ul className="space-y-1 text-sm text-purple-800">
+                        <li><code>p-6</code> → Padding</li>
+                        <li><code>bg-purple-800</code> → Background</li>
+                        <li><code>rounded-lg</code> → Rounded corners</li>
+                        <li><code>text-white</code> → Text color</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4">TailwindTutorial</h3>
-              <p className="text-gray-400">A comprehensive guide to using Tailwind CSS in JavaScript applications.</p>
-            </div>
-            <div>
-              <h4 className="font-bold mb-4">Quick Links</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#getting-started" className="hover:text-white transition">Getting Started</a></li>
-                <li><a href="#buttons" className="hover:text-white transition">Button Guide</a></li>
-                <li><a href="#responsive" className="hover:text-white transition">Responsive Design</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold mb-4">Resources</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition">Official Website</a></li>
-                <li><a href="https://tailwindui.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition">Tailwind UI</a></li>
-                <li><a href="https://v2.tailwindcss.com/docs" target="_blank" rel="noopener noreferrer" className="hover:text-white transition">Documentation</a></li>
-              </ul>
+          {/* Live Art Portfolio Demo with Unsplash Images */}
+{activeTab === 'demo' && (
+  <div className="space-y-6">
+    <h2 className="text-2xl font-bold text-purple-900">Portfolio Demo</h2>
+    
+    <div className="grid md:grid-cols-2 gap-8">
+      <div>
+        <h3 className="text-xl font-semibold text-purple-800 mb-4">Art Portfolio Example</h3>
+        
+        <div className="bg-white border border-purple-200 rounded-lg overflow-hidden">
+          <div className="p-6 bg-purple-600 text-white">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                <span className="text-lg font-bold text-purple-600">A</span>
+              </div>
+              <div>
+                <h4 className="text-xl font-bold">Art Gallery</h4>
+                <p className="text-purple-100">Contemporary Art Portfolio</p>
+              </div>
             </div>
           </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
-            <p>Built with Next.js and Tailwind CSS • Tutorial for educational purposes</p>
-            <p className="mt-2">© {new Date().getFullYear()} TailwindTutorial. All rights reserved.</p>
+          
+          <div className="p-6">
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              {/* 3 Unsplash Images */}
+              <div className="aspect-square rounded overflow-hidden">
+                <Image
+                  src="https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+                  alt="Abstract geometric art"
+                  width={200}
+                  height={200}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="aspect-square rounded overflow-hidden">
+                <Image
+                  src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+                  alt="Colorful painting"
+                  width={200}
+                  height={200}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="aspect-square rounded overflow-hidden col-span-2">
+                <Image
+                  src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+                  alt="Modern art"
+                  width={400}
+                  height={200}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            
+            <div className="flex flex-wrap gap-2 mb-6">
+              {['Abstract', 'Modern', 'Portrait', 'Digital'].map((tag) => (
+                <span key={tag} className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
-      </footer>
+      </div>
+
+      <div>
+        <h3 className="text-xl font-semibold text-purple-800 mb-4">Tailwind Code</h3>
+        
+        <div className="p-4 bg-purple-900 text-purple-100 rounded-lg overflow-x-auto">
+          <pre className="text-xs whitespace-pre-wrap break-words">
+{`<div class="bg-white border border-purple-200 rounded-lg">
+  <div class="p-6 bg-purple-600 text-white">
+    <div class="flex items-center space-x-4">
+      <div class="w-12 h-12 bg-white rounded-full">
+        <span class="text-lg font-bold text-purple-600">A</span>
+      </div>
+      <div>
+        <h4 class="text-xl font-bold">Gallery</h4>
+        <p class="text-purple-100">Portfolio</p>
+      </div>
+    </div>
+  </div>
+  <div class="p-6">
+    <div class="grid grid-cols-2 gap-4">
+      <img src="image1.jpg" class="w-full h-full object-cover rounded" />
+      <img src="image2.jpg" class="w-full h-full object-cover rounded" />
+      <img src="image3.jpg" class="w-full h-full object-cover rounded col-span-2" />
+    </div>
+    <div class="flex flex-wrap gap-2 mt-6">
+      <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full">
+        Abstract
+      </span>
+    </div>
+  </div>
+</div>`}
+          </pre>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+        </div>
+
+        {/* Quick Reference */}
+        <div className="mt-8 p-6 bg-purple-600 text-white rounded-lg">
+          <h3 className="text-xl font-bold mb-4">Quick Reference</h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div>
+              <h4 className="font-bold mb-2">Layout</h4>
+              <ul className="space-y-1 text-sm text-purple-100">
+                <li><code>flex</code> → Flexbox</li>
+                <li><code>grid</code> → CSS Grid</li>
+                <li><code>block</code> → Display</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-2">Spacing</h4>
+              <ul className="space-y-1 text-sm text-purple-100">
+                <li><code>p-4</code> → Padding</li>
+                <li><code>m-4</code> → Margin</li>
+                <li><code>gap-4</code> → Gap</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-2">Colors</h4>
+              <ul className="space-y-1 text-sm text-purple-100">
+                <li><code>bg-purple-500</code> → Purple</li>
+                <li><code>text-white</code> → White text</li>
+                <li><code>border</code> → Border</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
